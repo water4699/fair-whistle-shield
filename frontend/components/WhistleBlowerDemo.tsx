@@ -9,10 +9,10 @@ import { ActivityLogPanel } from "./ActivityLogPanel";
 import { useActivityLog } from "@/hooks/useActivityLog";
 import { useState, useEffect, useRef } from "react";
 import { 
-  Shield, Send, Eye, RefreshCw, AlertCircle, Lock, 
+  Send, Eye, RefreshCw, AlertCircle, Lock, 
   FileText, Clock, User, CheckCircle, XCircle,
-  Loader2, Sparkles, Info, Copy, Check, Zap,
-  TrendingUp, Award, Globe, Key, Database
+  Loader2, Sparkles, Copy, Check, Zap,
+  Award, Globe, Key, Database
 } from "lucide-react";
 
 type WhistleBlowerDemoProps = {
@@ -74,7 +74,6 @@ export const WhistleBlowerDemo = ({ mode = "full" }: WhistleBlowerDemoProps) => 
   const {
     provider,
     chainId,
-    accounts,
     isConnected,
     connect,
     ethersSigner,
@@ -564,7 +563,7 @@ export const WhistleBlowerDemo = ({ mode = "full" }: WhistleBlowerDemoProps) => 
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-amber-500">!</span>
-                  Don't include personal info
+                  Do not include personal info
                 </li>
               </ul>
             </div>
