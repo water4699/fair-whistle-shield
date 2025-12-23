@@ -1,0 +1,263 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 25% 97%;
+    --foreground: 220 25% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 10%;
+
+    --primary: 250 85% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 280 70% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --accent: 45 100% 55%;
+    --accent-foreground: 220 25% 10%;
+
+    --success: 150 70% 45%;
+    --warning: 35 95% 55%;
+    --danger: 0 75% 60%;
+
+    --muted: 220 15% 92%;
+    --muted-foreground: 220 10% 45%;
+
+    --border: 220 15% 88%;
+    --input: 220 15% 92%;
+    --ring: 250 85% 60%;
+
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 220 30% 8%;
+    --foreground: 220 15% 95%;
+
+    --card: 220 25% 12%;
+    --card-foreground: 220 15% 95%;
+
+    --primary: 250 80% 65%;
+    --primary-foreground: 220 30% 8%;
+
+    --secondary: 280 65% 60%;
+    --secondary-foreground: 220 30% 8%;
+
+    --accent: 45 95% 60%;
+    --accent-foreground: 220 30% 8%;
+
+    --success: 150 65% 50%;
+    --warning: 35 90% 55%;
+    --danger: 0 70% 55%;
+
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 10% 60%;
+
+    --border: 220 20% 22%;
+    --input: 220 20% 18%;
+    --ring: 250 80% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, hsl(250 85% 60% / 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, hsl(280 70% 55% / 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, hsl(45 100% 55% / 0.05) 0%, transparent 60%);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  /* 玻璃拟态卡片 */
+  .glass-card {
+    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl;
+    @apply border border-white/50 dark:border-gray-700/50;
+    @apply shadow-xl shadow-purple-500/5;
+    @apply rounded-2xl;
+    @apply transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    @apply shadow-2xl shadow-purple-500/10;
+    @apply border-purple-300/50 dark:border-purple-500/30;
+    transform: translateY(-2px);
+  }
+
+  /* 渐变按钮 */
+  .btn-gradient {
+    @apply relative overflow-hidden;
+    @apply bg-gradient-to-r from-purple-500 via-violet-500 to-indigo-500;
+    @apply text-white font-semibold;
+    @apply px-6 py-3 rounded-xl;
+    @apply shadow-lg shadow-purple-500/30;
+    @apply transition-all duration-300;
+    @apply hover:shadow-xl hover:shadow-purple-500/40;
+    @apply hover:scale-105 active:scale-95;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+
+  .btn-gradient::before {
+    content: '';
+    @apply absolute inset-0;
+    @apply bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400;
+    @apply opacity-0 transition-opacity duration-300;
+  }
+
+  .btn-gradient:hover::before {
+    @apply opacity-100;
+  }
+
+  .btn-gradient span {
+    @apply relative z-10;
+  }
+
+  /* 柔和按钮 */
+  .btn-soft {
+    @apply bg-purple-100 dark:bg-purple-900/30;
+    @apply text-purple-700 dark:text-purple-300;
+    @apply px-4 py-2 rounded-xl;
+    @apply border border-purple-200 dark:border-purple-700/50;
+    @apply transition-all duration-300;
+    @apply hover:bg-purple-200 dark:hover:bg-purple-800/40;
+    @apply hover:shadow-md;
+  }
+
+  /* 状态徽章 */
+  .badge-status {
+    @apply px-3 py-1 rounded-full text-xs font-semibold;
+    @apply inline-flex items-center gap-1;
+  }
+
+  .badge-pending {
+    @apply bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300;
+    @apply border border-amber-200 dark:border-amber-700/50;
+  }
+
+  .badge-review {
+    @apply bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300;
+    @apply border border-blue-200 dark:border-blue-700/50;
+  }
+
+  .badge-resolved {
+    @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300;
+    @apply border border-emerald-200 dark:border-emerald-700/50;
+  }
+
+  .badge-rejected {
+    @apply bg-gray-100 text-gray-600 dark:bg-gray-800/50 dark:text-gray-400;
+    @apply border border-gray-200 dark:border-gray-700/50;
+  }
+
+  /* 严重程度指示器 */
+  .severity-indicator {
+    @apply w-full h-2 rounded-full overflow-hidden;
+    @apply bg-gradient-to-r from-emerald-400 via-amber-400 to-red-500;
+  }
+
+  /* 输入框样式 */
+  .input-glass {
+    @apply w-full px-4 py-3 rounded-xl;
+    @apply bg-white/60 dark:bg-gray-800/60;
+    @apply border border-purple-200/50 dark:border-purple-700/30;
+    @apply backdrop-blur-sm;
+    @apply focus:outline-none focus:ring-2 focus:ring-purple-400/50;
+    @apply focus:border-purple-400 dark:focus:border-purple-500;
+    @apply transition-all duration-300;
+    @apply placeholder:text-gray-400;
+  }
+
+  .textarea-glass {
+    @apply w-full px-4 py-3 rounded-xl resize-none;
+    @apply bg-white/60 dark:bg-gray-800/60;
+    @apply border border-purple-200/50 dark:border-purple-700/30;
+    @apply backdrop-blur-sm;
+    @apply focus:outline-none focus:ring-2 focus:ring-purple-400/50;
+    @apply focus:border-purple-400 dark:focus:border-purple-500;
+    @apply transition-all duration-300;
+    @apply placeholder:text-gray-400;
+  }
+
+  /* 统计卡片 */
+  .stat-card {
+    @apply flex flex-col items-center justify-center p-4;
+    @apply bg-gradient-to-br from-white/80 to-purple-50/50;
+    @apply dark:from-gray-800/80 dark:to-purple-900/20;
+    @apply rounded-xl border border-purple-100 dark:border-purple-800/30;
+    @apply transition-all duration-300;
+  }
+
+  .stat-card:hover {
+    @apply scale-105;
+    @apply shadow-lg shadow-purple-500/10;
+  }
+
+  /* 浮动动画 */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* 脉冲光晕 */
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(250 85% 60% / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(250 85% 60% / 0.5); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* 渐变文字 */
+  .text-gradient {
+    @apply bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600;
+    @apply dark:from-purple-400 dark:via-violet-400 dark:to-indigo-400;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* 报告卡片 */
+  .report-card {
+    @apply glass-card p-5;
+    @apply border-l-4;
+  }
+
+  .report-card.status-pending {
+    @apply border-l-amber-400;
+  }
+
+  .report-card.status-review {
+    @apply border-l-blue-400;
+  }
+
+  .report-card.status-resolved {
+    @apply border-l-emerald-400;
+  }
+
+  .report-card.status-rejected {
+    @apply border-l-gray-400;
+  }
+
+  /* 工作原理步骤 */
+  .step-circle {
+    @apply w-10 h-10 rounded-full;
+    @apply bg-gradient-to-br from-purple-500 to-violet-600;
+    @apply flex items-center justify-center;
+    @apply text-white font-bold text-lg;
+    @apply shadow-lg shadow-purple-500/30;
+  }
+}
