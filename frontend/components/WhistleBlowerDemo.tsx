@@ -11,7 +11,7 @@ import { useState, useEffect, useRef } from "react";
 import { 
   Send, Eye, RefreshCw, AlertCircle, Lock, 
   FileText, Clock, User, CheckCircle, XCircle,
-  Loader2, Sparkles, Copy, Check, Zap,
+  Loader2, Sparkles, Info, Copy, Check, Zap,
   Award, Globe, Key, Database
 } from "lucide-react";
 
