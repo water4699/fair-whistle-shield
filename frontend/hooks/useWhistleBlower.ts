@@ -6,6 +6,7 @@ import { ethers } from "ethers";
 import { WhistleBlower } from "@/abi/WhistleBlowerABI";
 import { WhistleBlowerAddresses } from "@/abi/WhistleBlowerAddresses";
 import { FhevmDecryptionSignature } from "@/fhevm/FhevmDecryptionSignature";
+import type { GenericStringStorage } from "@/fhevm/GenericStringStorage";
 
 type Report = {
   id: number;
@@ -44,7 +45,7 @@ function getContentByHash(hash: string): string | null {
 
 interface UseWhistleBlowerProps {
   instance: FhevmInstance | null | undefined;
-  fhevmDecryptionSignatureStorage: Storage;
+  fhevmDecryptionSignatureStorage: GenericStringStorage;
   eip1193Provider: Eip1193Provider | null | undefined;
   chainId: number | null | undefined;
   ethersSigner: Signer | null | undefined;
