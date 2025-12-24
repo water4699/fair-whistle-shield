@@ -4,7 +4,6 @@ import { useFhevm } from "../fhevm/useFhevm";
 import { useInMemoryStorage } from "../hooks/useInMemoryStorage";
 import { useMetaMaskEthersSigner } from "../hooks/metamask/useMetaMaskEthersSigner";
 import { useFHECounter } from "@/hooks/useFHECounter";
-import { errorNotDeployed } from "./ErrorNotDeployed";
 
 /*
  * Main FHECounter React component with 3 buttons
@@ -92,12 +91,31 @@ export const FHECounterDemo = () => {
     );
   }
 
+  // Log deployment error to console but continue rendering
   if (fheCounter.isDeployed === false) {
-    return errorNotDeployed(chainId);
+    console.error(`FHECounter.sol Contract Not Deployed on chainId=${chainId} or Deployment Address Missing.`);
   }
 
   return (
     <div className="grid w-full gap-4">
+      {/* Contract Deployment Warning */}
+      {fheCounter.isDeployed === false && (
+        <div className="col-span-full mx-20 glass-card p-4 border-amber-300 dark:border-amber-600 bg-amber-50 dark:bg-amber-900/20">
+          <div className="flex items-center gap-3">
+            <div className="text-2xl">⚠️</div>
+            <div>
+              <p className="font-semibold text-amber-800 dark:text-amber-200">
+                Contract Not Deployed
+              </p>
+              <p className="text-sm text-amber-700 dark:text-amber-300">
+                The FHECounter contract is not deployed on this network. Some features may not work properly.
+                Check the console for deployment details.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="col-span-full mx-20 bg-black text-white">
         <p className="font-semibold  text-3xl m-5">
           FHEVM React Minimal Template -{" "}

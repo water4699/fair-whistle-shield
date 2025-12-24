@@ -4,7 +4,6 @@ import { useFhevm } from "../fhevm/useFhevm";
 import { useInMemoryStorage } from "../hooks/useInMemoryStorage";
 import { useMetaMaskEthersSigner } from "../hooks/metamask/useMetaMaskEthersSigner";
 import { useWhistleBlower } from "@/hooks/useWhistleBlower";
-import { errorNotDeployed } from "./ErrorNotDeployed";
 import { ActivityLogPanel } from "./ActivityLogPanel";
 import { useActivityLog } from "@/hooks/useActivityLog";
 import { useState, useEffect, useRef } from "react";
@@ -302,12 +301,31 @@ export const WhistleBlowerDemo = ({ mode = "full" }: WhistleBlowerDemoProps) => 
     );
   }
 
+  // Log deployment error to console but continue rendering
   if (whistleBlower.isDeployed === false) {
-    return errorNotDeployed(chainId);
+    console.error(`FHECounter.sol Contract Not Deployed on chainId=${chainId} or Deployment Address Missing.`);
   }
 
   return (
     <div className="space-y-6">
+      {/* Contract Deployment Warning */}
+      {whistleBlower.isDeployed === false && (
+        <div className="glass-card p-4 border-amber-300 dark:border-amber-600 bg-amber-50 dark:bg-amber-900/20">
+          <div className="flex items-center gap-3">
+            <div className="text-2xl">⚠️</div>
+            <div>
+              <p className="font-semibold text-amber-800 dark:text-amber-200">
+                Contract Not Deployed
+              </p>
+              <p className="text-sm text-amber-700 dark:text-amber-300">
+                The WhistleBlower contract is not deployed on this network. Some features may not work properly.
+                Check the console for deployment details.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 页面标题 + 合约信息 */}
       <div className="glass-card p-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
