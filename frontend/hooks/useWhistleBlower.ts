@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import type { FhevmInstance } from "@zama-fhe/relayer-sdk/bundle";
 import type { Eip1193Provider } from "ethers";
-import type { BrowserProvider, Signer } from "ethers";
+import type { BrowserProvider, Signer, ContractRunner, JsonRpcSigner, Provider } from "ethers";
+import type { RefObject } from "react";
 import { ethers } from "ethers";
 import { WhistleBlower } from "@/abi/WhistleBlowerABI";
 import { WhistleBlowerAddresses } from "@/abi/WhistleBlowerAddresses";
@@ -49,9 +50,9 @@ interface UseWhistleBlowerProps {
   eip1193Provider: Eip1193Provider | null | undefined;
   chainId: number | null | undefined;
   ethersSigner: Signer | null | undefined;
-  ethersReadonlyProvider: BrowserProvider | null | undefined;
-  sameChain: boolean;
-  sameSigner: boolean;
+  ethersReadonlyProvider: ContractRunner | null | undefined;
+  sameChain: RefObject<(chainId: number | undefined) => boolean>;
+  sameSigner: RefObject<(ethersSigner: JsonRpcSigner | undefined) => boolean>;
 }
 
 export function useWhistleBlower({
@@ -101,7 +102,7 @@ export function useWhistleBlower({
       }
 
       try {
-        const code = await ethersReadonlyProvider.getCode(contractAddress);
+        const code = await (ethersReadonlyProvider as Provider).getCode(contractAddress);
         setIsDeployed(code !== "0x");
       } catch (error) {
         console.error("Error checking deployment:", error);
